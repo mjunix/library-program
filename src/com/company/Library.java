@@ -21,11 +21,22 @@ public class Library {
             createBookDataFile();
         }
 
-        List<String> bookLines = (List<String>) FileUtility.loadText(BOOK_DATA_FILE);
-        books = new ArrayList<>();
+        books = readBooksFromFile(BOOK_DATA_FILE);
 
-        for (String bookLine : bookLines) {
-            String[] tokens = bookLine.split(BOOK_FIELD_SEPARATOR);
+        if(!Files.exists(Path.of(USER_DATA_FILE))) {
+            createUserDataFile();
+        }
+
+        users = (List<User>) FileUtility.loadObject(USER_DATA_FILE);
+    }
+
+    private List<Book> readBooksFromFile(String filename) {
+        List<Book> result = new ArrayList<>();
+
+        List<String> lines = (List<String>) FileUtility.loadText(filename);
+
+        for (String line : lines) {
+            String[] tokens = line.split(BOOK_FIELD_SEPARATOR);
 
             if(tokens.length != 3) {
                 continue;
@@ -35,14 +46,10 @@ public class Library {
             String author = tokens[1];
             String description = tokens[2];
 
-            books.add(new Book(title, author, description));
+            result.add(new Book(title, author, description));
         }
 
-        if(!Files.exists(Path.of(USER_DATA_FILE))) {
-            createUserDataFile();
-        }
-
-        users = (List<User>) FileUtility.loadObject(USER_DATA_FILE);
+        return result;
     }
 
     private void createBookDataFile() {
