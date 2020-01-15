@@ -24,4 +24,13 @@ public class Book implements Serializable {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
