@@ -10,4 +10,16 @@ public class Book {
         this.author = author;
         this.description = description;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
