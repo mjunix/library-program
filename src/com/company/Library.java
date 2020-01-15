@@ -14,6 +14,9 @@ public class Library {
 
     private List<Book> books;
     private List<User> users;
+
+    private User loggedInUser;
+
     private Scanner scanner = new Scanner(System.in);
 
     public Library() {
@@ -29,6 +32,38 @@ public class Library {
 
         users = (List<User>) FileUtility.loadObject(USER_DATA_FILE);
     }
+
+    public void startProgram() {
+        System.out.println("Welcome to Library Program");
+        System.out.println("Please login...");
+        login();
+    }
+
+    private void login() {
+        do {
+            System.out.print("Enter username: ");
+            String username = scanner.nextLine();
+
+            if((loggedInUser = getUserFromUsername(username)) != null) {
+                // logged in successfully
+                break;
+            }
+            else {
+                System.out.println("ERROR! Wrong username. Try again!");
+            }
+        } while(true);
+    }
+
+    private User getUserFromUsername(String username) {
+        for (User user : users) {
+            if(user.getName().equals(username)) {
+                return user;
+            }
+        }
+
+        return null;
+    }
+
 
     private List<Book> readBooksFromFile(String filename) {
         List<Book> result = new ArrayList<>();
