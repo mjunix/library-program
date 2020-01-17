@@ -48,7 +48,7 @@ public class Library {
                 // user wants to quit
                 break;
             }
-            else if((loggedInUser = getUserFromUsername(username)) != null) {
+            else if(loggedInSuccessFully(username)) {
                 // logged in successfully
                 showMainMenu();
             }
@@ -56,6 +56,10 @@ public class Library {
                 System.out.println("ERROR! Wrong username. Try again!");
             }
         } while(true);
+    }
+
+    private boolean loggedInSuccessFully(String username) {
+        return (loggedInUser = getUserFromUsername(username)) != null;
     }
 
     private void showMainMenu() {
