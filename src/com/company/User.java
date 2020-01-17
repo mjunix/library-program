@@ -16,6 +16,12 @@ public class User implements Serializable {
         return name;
     }
 
+    public void showBorrowedBooks() {
+        for (Book borrowedBook : borrowedBooks) {
+            System.out.println(borrowedBook);
+        }
+    }
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName() + "{" +

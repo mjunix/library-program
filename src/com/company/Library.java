@@ -118,6 +118,7 @@ public class Library {
     }
 
     private void showBorrowedBooks() {
+        loggedInUser.showBorrowedBooks();
     }
 
     private void searchBook() {
