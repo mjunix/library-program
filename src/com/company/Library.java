@@ -109,6 +109,9 @@ public class Library {
     }
 
     private void showAvailableBooks() {
+        for (Book book : books) {
+            System.out.println(book);
+        }
     }
 
     private void returnBook() {
