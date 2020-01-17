@@ -10,7 +10,7 @@ public class Library {
     private static final String BOOK_DATA_FILE = "books.ser";
     private static final String USER_DATA_FILE = "users.ser";
 
-    private List<Book> books;
+    private List<Book> availableBooks;
     private List<User> users;
 
     private User loggedInUser;
@@ -22,7 +22,7 @@ public class Library {
             createBookDataFile();
         }
 
-        books = (List<Book>) FileUtility.loadObject(BOOK_DATA_FILE);
+        availableBooks = (List<Book>) FileUtility.loadObject(BOOK_DATA_FILE);
 
         if(!Files.exists(Path.of(USER_DATA_FILE))) {
             createUserDataFile();
@@ -111,7 +111,7 @@ public class Library {
     }
 
     private void showAvailableBooks() {
-        for (Book book : books) {
+        for (Book book : availableBooks) {
             System.out.println(book);
         }
     }
@@ -133,6 +133,15 @@ public class Library {
     }
 
     private void showAllBooks() {
+        List<Book> allBooks = new ArrayList<>(availableBooks);
+
+        for (User user : users) {
+            allBooks.addAll(user.getBorrowedBooks());
+        }
+
+        for (Book book : allBooks) {
+            System.out.println(book);
+        }
     }
 
     private int getIntegerFromUser(String prompt) {
