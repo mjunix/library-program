@@ -133,15 +133,21 @@ public class Library {
     }
 
     private void showAllBooks() {
+        List<Book> allBooks = getAllBooks();
+
+        for (Book book : allBooks) {
+            System.out.println(book);
+        }
+    }
+
+    private List<Book> getAllBooks() {
         List<Book> allBooks = new ArrayList<>(availableBooks);
 
         for (User user : users) {
             allBooks.addAll(user.getBorrowedBooks());
         }
 
-        for (Book book : allBooks) {
-            System.out.println(book);
-        }
+        return allBooks;
     }
 
     private int getIntegerFromUser(String prompt) {
