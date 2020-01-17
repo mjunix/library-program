@@ -41,17 +41,103 @@ public class Library {
 
     private void login() {
         do {
-            System.out.print("Enter username: ");
+            System.out.print("Enter username (or empty string to quit): ");
             String username = scanner.nextLine();
 
-            if((loggedInUser = getUserFromUsername(username)) != null) {
-                // logged in successfully
+            if(username.isBlank()) {
+                // user wants to quit
                 break;
+            }
+            else if((loggedInUser = getUserFromUsername(username)) != null) {
+                // logged in successfully
+                showMainMenu();
             }
             else {
                 System.out.println("ERROR! Wrong username. Try again!");
             }
         } while(true);
+    }
+
+    private void showMainMenu() {
+        while(true) {
+            System.out.println("Main menu");
+            System.out.println("1. Show all books");
+            System.out.println("2. Show book details");
+            System.out.println("3. Borrow book");
+            System.out.println("4. Search book");
+            System.out.println("5. Show my borrowed books");
+            System.out.println("6. Return book");
+            System.out.println("7. Show available books");
+
+            if(loggedInUser instanceof Librarian) {
+                // TODO: extra options for librarians
+            }
+
+            System.out.println("0. Logout");
+
+            int choice = getIntegerFromUser("Enter option: ");
+
+            switch(choice) {
+                case 1:
+                    showAllBooks();
+                    break;
+                case 2:
+                    showBookDetails();
+                    break;
+                case 3:
+                    borrowBook();
+                    break;
+                case 4:
+                    searchBook();
+                    break;
+                case 5:
+                    showBorrowedBooks();
+                    break;
+                case 6:
+                    returnBook();
+                    break;
+                case 7:
+                    showAvailableBooks();
+                    break;
+                case 0:
+                    return; // logout
+                default:
+                    System.out.println("ERROR: Invalid choice! Try again!");
+                    break;
+            }
+        }
+    }
+
+    private void showAvailableBooks() {
+    }
+
+    private void returnBook() {
+    }
+
+    private void showBorrowedBooks() {
+    }
+
+    private void searchBook() {
+    }
+
+    private void borrowBook() {
+    }
+
+    private void showBookDetails() {
+    }
+
+    private void showAllBooks() {
+    }
+
+    private int getIntegerFromUser(String prompt) {
+        while(true) {
+            try {
+                System.out.print(prompt);
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("ERROR: Invalid integer. Try again!");
+            }
+        }
     }
 
     private User getUserFromUsername(String username) {
