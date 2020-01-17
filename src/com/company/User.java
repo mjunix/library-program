@@ -22,6 +22,10 @@ public class User implements Serializable {
         }
     }
 
+    public List<Book> getBorrowedBooks() {
+        return new ArrayList<>(borrowedBooks);
+    }
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName() + "{" +
