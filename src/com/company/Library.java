@@ -7,10 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Library {
-    private static final String BOOK_DATA_FILE = "books.txt";
+    private static final String BOOK_DATA_FILE = "books.ser";
     private static final String USER_DATA_FILE = "users.ser";
-
-    private static final String BOOK_FIELD_SEPARATOR = ":::";
 
     private List<Book> books;
     private List<User> users;
@@ -24,7 +22,7 @@ public class Library {
             createBookDataFile();
         }
 
-        books = readBooksFromFile(BOOK_DATA_FILE);
+        books = (List<Book>) FileUtility.loadObject(BOOK_DATA_FILE);
 
         if(!Files.exists(Path.of(USER_DATA_FILE))) {
             createUserDataFile();
@@ -158,29 +156,6 @@ public class Library {
         return null;
     }
 
-
-    private List<Book> readBooksFromFile(String filename) {
-        List<Book> result = new ArrayList<>();
-
-        List<String> lines = (List<String>) FileUtility.loadText(filename);
-
-        for (String line : lines) {
-            String[] tokens = line.split(BOOK_FIELD_SEPARATOR);
-
-            if(tokens.length != 3) {
-                continue;
-            }
-
-            String title = tokens[0];
-            String author = tokens[1];
-            String description = tokens[2];
-
-            result.add(new Book(title, author, description));
-        }
-
-        return result;
-    }
-
     private void createBookDataFile() {
         List<Book> defaultBooks = new ArrayList<>();
         defaultBooks.add(new Book("Book1", "Author1", "Description1"));
@@ -189,13 +164,7 @@ public class Library {
         defaultBooks.add(new Book("Book4", "Author4", "Description4"));
         defaultBooks.add(new Book("Book5", "Author5", "Description5"));
 
-        List<String> bookLines = new ArrayList<>();
-
-        for (Book book : defaultBooks) {
-            bookLines.add(book.getTitle() + BOOK_FIELD_SEPARATOR + book.getAuthor() + BOOK_FIELD_SEPARATOR + book.getDescription());
-        }
-
-        FileUtility.saveText(BOOK_DATA_FILE, bookLines);
+        FileUtility.saveObject(BOOK_DATA_FILE, defaultBooks);
     }
 
     private void createUserDataFile() {
