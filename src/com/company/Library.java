@@ -180,6 +180,28 @@ public class Library {
     }
 
     private void borrowBook() {
+        while(true) {
+            for (int i = 0; i < availableBooks.size(); i++) {
+                System.out.println((i + 1) + ". " + availableBooks.get(i));
+            }
+            System.out.println("0. Exit");
+
+            int index = getIntegerFromUser("Enter index of book to borrow: ");
+
+            if (index == 0) {
+                return; // exit
+            }
+
+            index--; // make index zero-based
+
+            if(index < 0 || index >= availableBooks.size()) {
+                System.out.println("ERROR: Invalid index! Try again!");
+                continue;
+            }
+
+            Book bookToBorrow = availableBooks.remove(index);
+            loggedInUser.borrowBook(bookToBorrow);
+        }
     }
 
     private void showBookDetails() {
