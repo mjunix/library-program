@@ -16,10 +16,12 @@ public class User implements Serializable {
         return name;
     }
 
-    public void showBorrowedBooks() {
-        for (Book borrowedBook : borrowedBooks) {
-            System.out.println(borrowedBook);
-        }
+    public void borrowBook(Book book) {
+        borrowedBooks.add(book);
+    }
+
+    public Book returnBook(int index) {
+        return borrowedBooks.remove(index);
     }
 
     public List<Book> getBorrowedBooks() {
