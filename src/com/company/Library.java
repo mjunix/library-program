@@ -18,13 +18,13 @@ public class Library {
     private Scanner scanner = new Scanner(System.in);
 
     public Library() {
-        if(!Files.exists(Path.of(BOOK_DATA_FILE))) {
+        if (!Files.exists(Path.of(BOOK_DATA_FILE))) {
             createBookDataFile();
         }
 
         availableBooks = (List<Book>) FileUtility.loadObject(BOOK_DATA_FILE);
 
-        if(!Files.exists(Path.of(USER_DATA_FILE))) {
+        if (!Files.exists(Path.of(USER_DATA_FILE))) {
             createUserDataFile();
         }
 
@@ -38,22 +38,20 @@ public class Library {
     }
 
     private void login() {
-        do {
+        while (true) {
             System.out.print("Enter username (or empty string to quit): ");
             String username = scanner.nextLine();
 
-            if(username.isBlank()) {
+            if (username.isBlank()) {
                 // user wants to quit
                 break;
-            }
-            else if(loggedInSuccessFully(username)) {
+            } else if (loggedInSuccessFully(username)) {
                 // logged in successfully
                 showMainMenu();
-            }
-            else {
+            } else {
                 System.out.println("ERROR! Wrong username. Try again!");
             }
-        } while(true);
+        }
     }
 
     private boolean loggedInSuccessFully(String username) {
@@ -61,7 +59,7 @@ public class Library {
     }
 
     private void showMainMenu() {
-        while(true) {
+        while (true) {
             System.out.println("Main menu");
             System.out.println("1. Show all books");
             System.out.println("2. Show book details");
@@ -81,7 +79,7 @@ public class Library {
 
             int choice = getIntegerFromUser("Enter option: ");
 
-            switch(choice) {
+            switch (choice) {
                 case 1:
                     showAllBooks();
                     break;
@@ -137,42 +135,42 @@ public class Library {
     }
 
     private void showAllBooksBorrowedByUser() {
-        if(!(currentUser instanceof Librarian)) {
+        if (!(currentUser instanceof Librarian)) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
     }
 
     private void searchForUser() {
-        if(!(currentUser instanceof Librarian)) {
+        if (!(currentUser instanceof Librarian)) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
     }
 
     private void showAllUsers() {
-        if(!(currentUser instanceof Librarian)) {
+        if (!(currentUser instanceof Librarian)) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
     }
 
     private void removeBook() {
-        if(!(currentUser instanceof Librarian)) {
+        if (!(currentUser instanceof Librarian)) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
     }
 
     private void addNewBook() {
-        if(!(currentUser instanceof Librarian)) {
+        if (!(currentUser instanceof Librarian)) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
     }
 
     private void showAllBorrowedBooks() {
-        if(!(currentUser instanceof Librarian)) {
+        if (!(currentUser instanceof Librarian)) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
@@ -185,7 +183,7 @@ public class Library {
     }
 
     private void returnBook() {
-        while(true) {
+        while (true) {
             for (int i = 0; i < currentUser.getBorrowedBooks().size(); i++) {
                 System.out.println((i + 1) + ". " + currentUser.getBorrowedBooks().get(i).getTitle());
             }
@@ -199,7 +197,7 @@ public class Library {
 
             index--; // make index zero-based
 
-            if(index < 0 || index >= currentUser.getBorrowedBooks().size()) {
+            if (index < 0 || index >= currentUser.getBorrowedBooks().size()) {
                 System.out.println("ERROR: Invalid index. Try again!");
                 continue;
             }
@@ -216,7 +214,7 @@ public class Library {
     }
 
     private void searchBook() {
-        while(true) {
+        while (true) {
             System.out.println("Search by:");
             System.out.println("1. Title");
             System.out.println("2. Author");
@@ -224,11 +222,11 @@ public class Library {
 
             int choice = getIntegerFromUser("Enter choice: ");
 
-            if(choice == 0) {
+            if (choice == 0) {
                 return;
             }
 
-            if(choice > 2 || choice < 0) {
+            if (choice > 2 || choice < 0) {
                 System.out.println("ERROR: Invalid choice! Try again!");
                 continue;
             }
@@ -236,8 +234,8 @@ public class Library {
             System.out.print("Enter search string: ");
             String searchString = scanner.nextLine().toLowerCase();
 
-            for(Book book : getAllBooks()) {
-                if((choice == 1 && book.getTitle().toLowerCase().contains(searchString)) ||
+            for (Book book : getAllBooks()) {
+                if ((choice == 1 && book.getTitle().toLowerCase().contains(searchString)) ||
                         (choice == 2 && book.getAuthor().toLowerCase().contains(searchString))) {
                     System.out.println(book);
                 }
@@ -248,7 +246,7 @@ public class Library {
     }
 
     private void borrowBook() {
-        while(true) {
+        while (true) {
             for (int i = 0; i < availableBooks.size(); i++) {
                 System.out.println((i + 1) + ". " + availableBooks.get(i));
             }
@@ -262,7 +260,7 @@ public class Library {
 
             index--; // make index zero-based
 
-            if(index < 0 || index >= availableBooks.size()) {
+            if (index < 0 || index >= availableBooks.size()) {
                 System.out.println("ERROR: Invalid index! Try again!");
                 continue;
             }
@@ -274,7 +272,7 @@ public class Library {
     }
 
     private void showBookDetails() {
-        while(true) {
+        while (true) {
             List<Book> allBooks = getAllBooks();
 
             for (int i = 0; i < allBooks.size(); i++) {
@@ -285,13 +283,13 @@ public class Library {
 
             int choice = getIntegerFromUser("Enter index of book to see its detailed info: ");
 
-            if(choice == 0) {
+            if (choice == 0) {
                 return;
             }
 
             choice--; // make zero-based
 
-            if(choice < 0 || choice >= allBooks.size()) {
+            if (choice < 0 || choice >= allBooks.size()) {
                 System.out.println("ERROR: Invalid index! Try again!");
                 continue;
             }
@@ -306,9 +304,7 @@ public class Library {
     }
 
     private void showAllBooks() {
-        List<Book> allBooks = getAllBooks();
-
-        for (Book book : allBooks) {
+        for (Book book : getAllBooks()) {
             System.out.println(book);
         }
     }
@@ -324,7 +320,7 @@ public class Library {
     }
 
     private int getIntegerFromUser(String prompt) {
-        while(true) {
+        while (true) {
             try {
                 System.out.print(prompt);
                 return Integer.parseInt(scanner.nextLine());
@@ -336,7 +332,7 @@ public class Library {
 
     private User getUserFromUsername(String username) {
         for (User user : users) {
-            if(user.getName().equals(username)) {
+            if (user.getName().equals(username)) {
                 return user;
             }
         }
