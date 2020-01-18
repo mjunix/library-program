@@ -137,21 +137,45 @@ public class Library {
     }
 
     private void showAllBooksBorrowedByUser() {
+        if(!(currentUser instanceof Librarian)) {
+            System.out.println("ERROR: This action can only be performed by librarians!");
+            return;
+        }
     }
 
     private void searchForUser() {
+        if(!(currentUser instanceof Librarian)) {
+            System.out.println("ERROR: This action can only be performed by librarians!");
+            return;
+        }
     }
 
     private void showAllUsers() {
+        if(!(currentUser instanceof Librarian)) {
+            System.out.println("ERROR: This action can only be performed by librarians!");
+            return;
+        }
     }
 
     private void removeBook() {
+        if(!(currentUser instanceof Librarian)) {
+            System.out.println("ERROR: This action can only be performed by librarians!");
+            return;
+        }
     }
 
     private void addNewBook() {
+        if(!(currentUser instanceof Librarian)) {
+            System.out.println("ERROR: This action can only be performed by librarians!");
+            return;
+        }
     }
 
     private void showAllBorrowedBooks() {
+        if(!(currentUser instanceof Librarian)) {
+            System.out.println("ERROR: This action can only be performed by librarians!");
+            return;
+        }
     }
 
     private void showAvailableBooks() {
