@@ -228,6 +228,17 @@ public class Library {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
+
+        System.out.print("Enter title: ");
+        String title = scanner.nextLine();
+
+        System.out.print("Enter author: ");
+        String author = scanner.nextLine();
+
+        System.out.print("Enter description: ");
+        String description = scanner.nextLine();
+
+        availableBooks.add(new Book(title, author, description));
     }
 
     private void showAllBorrowedBooks() {
