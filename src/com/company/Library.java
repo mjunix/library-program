@@ -70,11 +70,13 @@ public class Library {
             System.out.println("5. Show my borrowed books");
             System.out.println("6. Return book");
             System.out.println("7. Show available books");
-
-            if(currentUser instanceof Librarian) {
-                // TODO: extra options for librarians
-            }
-
+            System.out.println("8. Show all borrowed books          (Librarian only)");
+            System.out.println("9. Add new book                     (Librarian only)");
+            System.out.println("10. Remove book                     (Librarian only)");
+            System.out.println("11. Show all users                  (Librarian only)");
+            System.out.println("12. Search for user                 (Librarian only)");
+            System.out.println("13. Show all books borrowed by user (Librarian only)");
+            System.out.println("14. Sort books");
             System.out.println("0. Logout");
 
             int choice = getIntegerFromUser("Enter option: ");
@@ -101,6 +103,27 @@ public class Library {
                 case 7:
                     showAvailableBooks();
                     break;
+                case 8:
+                    showAllBorrowedBooks();
+                    break;
+                case 9:
+                    addNewBook();
+                    break;
+                case 10:
+                    removeBook();
+                    break;
+                case 11:
+                    showAllUsers();
+                    break;
+                case 12:
+                    searchForUser();
+                    break;
+                case 13:
+                    showAllBooksBorrowedByUser();
+                    break;
+                case 14:
+                    sortBooks();
+                    break;
                 case 0:
                     return; // logout
                 default:
@@ -108,6 +131,27 @@ public class Library {
                     break;
             }
         }
+    }
+
+    private void sortBooks() {
+    }
+
+    private void showAllBooksBorrowedByUser() {
+    }
+
+    private void searchForUser() {
+    }
+
+    private void showAllUsers() {
+    }
+
+    private void removeBook() {
+    }
+
+    private void addNewBook() {
+    }
+
+    private void showAllBorrowedBooks() {
     }
 
     private void showAvailableBooks() {
