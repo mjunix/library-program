@@ -20,8 +20,8 @@ public class User implements Serializable {
         borrowedBooks.add(book);
     }
 
-    public void returnBook(int index) {
-        borrowedBooks.remove(index);
+    public Book returnBook(int index) {
+        return borrowedBooks.remove(index);
     }
 
     public List<Book> getBorrowedBooks() {

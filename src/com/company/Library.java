@@ -136,7 +136,7 @@ public class Library {
                 continue;
             }
 
-            loggedInUser.returnBook(index);
+            availableBooks.add(loggedInUser.returnBook(index));
             break;
         }
     }
