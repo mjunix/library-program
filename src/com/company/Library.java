@@ -124,6 +124,35 @@ public class Library {
     }
 
     private void searchBook() {
+        while(true) {
+            System.out.println("Search by:");
+            System.out.println("1. Title");
+            System.out.println("2. Author");
+            System.out.println("0. Exit");
+
+            int choice = getIntegerFromUser("Enter choice: ");
+
+            if(choice == 0) {
+                return;
+            }
+
+            if(choice > 2 || choice < 0) {
+                System.out.println("ERROR: Invalid choice! Try again!");
+                continue;
+            }
+
+            System.out.print("Enter search string: ");
+            String searchString = scanner.nextLine().toLowerCase();
+
+            for(Book book : getAllBooks()) {
+                if((choice == 1 && book.getTitle().toLowerCase().contains(searchString)) ||
+                        (choice == 2 && book.getAuthor().toLowerCase().contains(searchString))) {
+                    System.out.println(book);
+                }
+            }
+
+            break;
+        }
     }
 
     private void borrowBook() {
