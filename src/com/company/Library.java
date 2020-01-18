@@ -13,7 +13,7 @@ public class Library {
     private List<Book> availableBooks;
     private List<User> users;
 
-    private User loggedInUser;
+    private User currentUser;
 
     private Scanner scanner = new Scanner(System.in);
 
@@ -57,7 +57,7 @@ public class Library {
     }
 
     private boolean loggedInSuccessFully(String username) {
-        return (loggedInUser = getUserFromUsername(username)) != null;
+        return (currentUser = getUserFromUsername(username)) != null;
     }
 
     private void showMainMenu() {
@@ -71,7 +71,7 @@ public class Library {
             System.out.println("6. Return book");
             System.out.println("7. Show available books");
 
-            if(loggedInUser instanceof Librarian) {
+            if(currentUser instanceof Librarian) {
                 // TODO: extra options for librarians
             }
 
@@ -118,8 +118,8 @@ public class Library {
 
     private void returnBook() {
         while(true) {
-            for (int i = 0; i < loggedInUser.getBorrowedBooks().size(); i++) {
-                System.out.println((i + 1) + ". " + loggedInUser.getBorrowedBooks().get(i).getTitle());
+            for (int i = 0; i < currentUser.getBorrowedBooks().size(); i++) {
+                System.out.println((i + 1) + ". " + currentUser.getBorrowedBooks().get(i).getTitle());
             }
             System.out.println("0. Exit");
 
@@ -131,18 +131,18 @@ public class Library {
 
             index--; // make index zero-based
 
-            if(index < 0 || index >= loggedInUser.getBorrowedBooks().size()) {
+            if(index < 0 || index >= currentUser.getBorrowedBooks().size()) {
                 System.out.println("ERROR: Invalid index. Try again!");
                 continue;
             }
 
-            availableBooks.add(loggedInUser.returnBook(index));
+            availableBooks.add(currentUser.returnBook(index));
             break;
         }
     }
 
     private void showBorrowedBooks() {
-        for (Book borrowedBook : loggedInUser.getBorrowedBooks()) {
+        for (Book borrowedBook : currentUser.getBorrowedBooks()) {
             System.out.println(borrowedBook);
         }
     }
@@ -200,7 +200,7 @@ public class Library {
             }
 
             Book bookToBorrow = availableBooks.remove(index);
-            loggedInUser.borrowBook(bookToBorrow);
+            currentUser.borrowBook(bookToBorrow);
             break;
         }
     }
