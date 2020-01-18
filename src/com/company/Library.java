@@ -208,6 +208,8 @@ public class Library {
             for (Book borrowedBook : users.get(index).getBorrowedBooks()) {
                 System.out.println(borrowedBook);
             }
+
+            break;
         }
     }
 
