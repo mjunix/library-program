@@ -16,6 +16,14 @@ public class User implements Serializable {
         return name;
     }
 
+    public void borrowBook(Book book) {
+        borrowedBooks.add(book);
+    }
+
+    public void returnBook(int index) {
+        borrowedBooks.remove(index);
+    }
+
     public List<Book> getBorrowedBooks() {
         return new ArrayList<>(borrowedBooks);
     }
