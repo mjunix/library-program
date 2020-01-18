@@ -130,6 +130,35 @@ public class Library {
     }
 
     private void showBookDetails() {
+        while(true) {
+            List<Book> allBooks = getAllBooks();
+
+            for (int i = 0; i < allBooks.size(); i++) {
+                Book book = allBooks.get(i);
+                System.out.println((i + 1) + ". \"" + book.getTitle() + "\" by " + book.getAuthor());
+            }
+            System.out.println("0. Exit");
+
+            int choice = getIntegerFromUser("Enter index of book to see its detailed info: ");
+
+            if(choice == 0) {
+                return;
+            }
+
+            choice--; // make zero-based
+
+            if(choice < 0 || choice >= allBooks.size()) {
+                System.out.println("ERROR: Invalid index! Try again!");
+                continue;
+            }
+
+            Book book = allBooks.get(choice);
+            System.out.println("Title: " + book.getTitle());
+            System.out.println("Author: " + book.getAuthor());
+            System.out.println("Description: " + book.getDescription());
+            System.out.println("Available: " + availableBooks.contains(book));
+            break;
+        }
     }
 
     private void showAllBooks() {
