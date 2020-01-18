@@ -3,6 +3,7 @@ package com.company;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -132,6 +133,51 @@ public class Library {
     }
 
     private void sortBooks() {
+        while (true) {
+            System.out.println("Sort by:");
+            System.out.println("1. Title");
+            System.out.println("2. Author");
+            System.out.println("0. Exit");
+
+            int value = getIntegerFromUser("Sort by: ");
+
+            if(value == 0) {
+                return;
+            }
+
+            if(value < 0 || value > 2) {
+                System.out.println("ERROR: Invalid value! Try again!");
+                continue;
+            }
+
+            Comparator<? super Book> comparator = null;
+
+            if(value == 1) { // sort by title
+                comparator = new Comparator<Book>() {
+                    @Override
+                    public int compare(Book b1, Book b2) {
+                        return b1.getTitle().compareToIgnoreCase(b2.getTitle());
+                    }
+                };
+            }
+            else if(value == 2) { // sort by author
+                comparator = new Comparator<Book>() {
+                    @Override
+                    public int compare(Book b1, Book b2) {
+                        return b1.getAuthor().compareToIgnoreCase(b2.getAuthor());
+                    }
+                };
+            }
+
+            List<Book> books = getAllBooks();
+            books.sort(comparator);
+
+            for (Book book : books) {
+                System.out.println(book);
+            }
+
+            break;
+        }
     }
 
     private void showAllBooksBorrowedByUser() {
