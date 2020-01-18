@@ -146,6 +146,15 @@ public class Library {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
+
+        System.out.print("Enter search string: ");
+        String searchString = scanner.nextLine().toLowerCase();
+
+        for (User user : users) {
+            if(user.getName().contains(searchString)) {
+                System.out.println(user);
+            }
+        }
     }
 
     private void showAllUsers() {
