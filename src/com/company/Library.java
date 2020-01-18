@@ -201,6 +201,7 @@ public class Library {
 
             Book bookToBorrow = availableBooks.remove(index);
             loggedInUser.borrowBook(bookToBorrow);
+            break;
         }
     }
 
