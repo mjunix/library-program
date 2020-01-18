@@ -120,7 +120,9 @@ public class Library {
     }
 
     private void showBorrowedBooks() {
-        loggedInUser.showBorrowedBooks();
+        for (Book borrowedBook : loggedInUser.getBorrowedBooks()) {
+            System.out.println(borrowedBook);
+        }
     }
 
     private void searchBook() {

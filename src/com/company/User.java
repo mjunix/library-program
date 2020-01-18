@@ -16,12 +16,6 @@ public class User implements Serializable {
         return name;
     }
 
-    public void showBorrowedBooks() {
-        for (Book borrowedBook : borrowedBooks) {
-            System.out.println(borrowedBook);
-        }
-    }
-
     public List<Book> getBorrowedBooks() {
         return new ArrayList<>(borrowedBooks);
     }
