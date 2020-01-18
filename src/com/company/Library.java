@@ -186,6 +186,10 @@ public class Library {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
+
+        for (User user : users) {
+            System.out.println(user);
+        }
     }
 
     private void removeBook() {
