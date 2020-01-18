@@ -246,6 +246,12 @@ public class Library {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
+
+        for (User user : users) {
+            for (Book borrowedBook : user.getBorrowedBooks()) {
+                System.out.println(borrowedBook);
+            }
+        }
     }
 
     private void showAvailableBooks() {
