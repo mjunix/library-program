@@ -197,6 +197,30 @@ public class Library {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
+
+        while(true) {
+            for (int i = 0; i < availableBooks.size(); i++) {
+                System.out.println((i + 1) + ". " + availableBooks.get(i));
+            }
+            System.out.println("0. Exit");
+
+            int index = getIntegerFromUser("Enter index of book to remove: ");
+
+            if(index == 0) {
+                return;
+            }
+
+            index--; // make index zero-based
+
+            if(index < 0 || index >= availableBooks.size()) {
+                System.out.println("ERROR: Invalid index! Try again!");
+                continue;
+            }
+
+            availableBooks.remove(index);
+
+            break;
+        }
     }
 
     private void addNewBook() {
