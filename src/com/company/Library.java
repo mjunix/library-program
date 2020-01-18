@@ -139,6 +139,30 @@ public class Library {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
+
+        while (true) {
+            for (int i = 0; i < users.size(); i++) {
+                System.out.println((i + 1) + ". " + users.get(i).getName());
+            }
+            System.out.println("0. Exit");
+
+            int index = getIntegerFromUser("Enter index of user: ");
+
+            if (index == 0) {
+                return;
+            }
+
+            index--; // make index zero-based
+
+            if (index < 0 || index >= users.size()) {
+                System.out.println("ERROR: Invalid index! Try again!");
+                continue;
+            }
+
+            for (Book borrowedBook : users.get(index).getBorrowedBooks()) {
+                System.out.println(borrowedBook);
+            }
+        }
     }
 
     private void searchForUser() {
