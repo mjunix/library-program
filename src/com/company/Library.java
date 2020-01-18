@@ -117,6 +117,28 @@ public class Library {
     }
 
     private void returnBook() {
+        while(true) {
+            for (int i = 0; i < loggedInUser.getBorrowedBooks().size(); i++) {
+                System.out.println((i + 1) + ". " + loggedInUser.getBorrowedBooks().get(i).getTitle());
+            }
+            System.out.println("0. Exit");
+
+            int index = getIntegerFromUser("Enter index of book to return: ");
+
+            if (index == 0) {
+                return; // exit
+            }
+
+            index--; // make index zero-based
+
+            if(index < 0 || index >= loggedInUser.getBorrowedBooks().size()) {
+                System.out.println("ERROR: Invalid index. Try again!");
+                continue;
+            }
+
+            loggedInUser.returnBook(index);
+            break;
+        }
     }
 
     private void showBorrowedBooks() {
