@@ -61,6 +61,7 @@ public class Library {
 
     private void showMainMenu() {
         while (true) {
+            System.out.println();
             System.out.println("Main menu");
             System.out.println("1. Show all books");
             System.out.println("2. Show book details");
@@ -123,8 +124,9 @@ public class Library {
                 case 14:
                     sortBooks();
                     break;
-                case 0:
-                    return; // logout
+                case 0: // logout
+                    saveProgramStateToFiles();
+                    return;
                 default:
                     System.out.println("ERROR: Invalid choice! Try again!");
                     break;
@@ -464,6 +466,11 @@ public class Library {
         }
 
         return null;
+    }
+
+    private void saveProgramStateToFiles() {
+        FileUtility.saveObject(BOOK_DATA_FILE, availableBooks);
+        FileUtility.saveObject(USER_DATA_FILE, users);
     }
 
     private void createBookDataFile() {
