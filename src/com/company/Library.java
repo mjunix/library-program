@@ -61,6 +61,7 @@ public class Library {
 
     private void showMainMenu() {
         while (true) {
+            System.out.println();
             System.out.println("Main menu");
             System.out.println("1. Show all books");
             System.out.println("2. Show book details");
