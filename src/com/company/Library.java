@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -162,27 +161,14 @@ public class Library {
                 continue;
             }
 
-            Comparator<? super Book> comparator = null;
+            List<Book> books = getAllBooks();
 
             if(value == 1) { // sort by title
-                comparator = new Comparator<Book>() {
-                    @Override
-                    public int compare(Book b1, Book b2) {
-                        return b1.getTitle().compareToIgnoreCase(b2.getTitle());
-                    }
-                };
+                books.sort((b1, b2) -> b1.getTitle().compareToIgnoreCase(b2.getTitle()));
             }
             else if(value == 2) { // sort by author
-                comparator = new Comparator<Book>() {
-                    @Override
-                    public int compare(Book b1, Book b2) {
-                        return b1.getAuthor().compareToIgnoreCase(b2.getAuthor());
-                    }
-                };
+                books.sort((b1, b2) -> b1.getAuthor().compareToIgnoreCase(b2.getAuthor()));
             }
-
-            List<Book> books = getAllBooks();
-            books.sort(comparator);
 
             for (Book book : books) {
                 System.out.println(book);
