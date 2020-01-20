@@ -328,6 +328,11 @@ public class Library {
     }
 
     private void showBorrowedBooks() {
+        if(currentUser.getBorrowedBooks().isEmpty()) {
+            System.out.println("You have not borrowed any books!");
+            return;
+        }
+
         for (Book borrowedBook : currentUser.getBorrowedBooks()) {
             System.out.printf("\"%s\" by %s\n", borrowedBook.getTitle(), borrowedBook.getAuthor());
         }
