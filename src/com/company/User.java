@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +18,14 @@ public class User implements Serializable {
     }
 
     public void borrowBook(Book book) {
+        book.setLoanDate(LocalDateTime.now());
         borrowedBooks.add(book);
     }
 
     public Book returnBook(int index) {
-        return borrowedBooks.remove(index);
+        Book returnedBook = borrowedBooks.remove(index);
+        returnedBook.setLoanDate(null);
+        return returnedBook;
     }
 
     public List<Book> getBorrowedBooks() {
