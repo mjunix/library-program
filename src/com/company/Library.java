@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,17 +19,17 @@ public class Library {
 
     private Scanner scanner = new Scanner(System.in);
 
-    private static final Duration LOAN_DURATION = Duration.ofSeconds(5);
+    private static final Duration LOAN_DURATION = Duration.ofSeconds(5); // intentionally very short to simplify testing
 
     public Library() {
         if (!Files.exists(Path.of(BOOK_DATA_FILE))) {
-            createBookDataFile();
+            createDefaultBookDataFile();
         }
 
         availableBooks = (List<Book>) FileUtility.loadObject(BOOK_DATA_FILE);
 
         if (!Files.exists(Path.of(USER_DATA_FILE))) {
-            createUserDataFile();
+            createDefaultUserDataFile();
         }
 
         users = (List<User>) FileUtility.loadObject(USER_DATA_FILE);
@@ -72,17 +71,21 @@ public class Library {
             System.out.println("1. Show all books");
             System.out.println("2. Show book details");
             System.out.println("3. Borrow book");
-            System.out.println("4. Search book");
+            System.out.println("4. Return book");
             System.out.println("5. Show my borrowed books");
-            System.out.println("6. Return book");
+            System.out.println("6. Search book");
             System.out.println("7. Show available books");
-            System.out.println("8. Show all borrowed books          (Librarian only)");
-            System.out.println("9. Add new book                     (Librarian only)");
-            System.out.println("10. Remove book                     (Librarian only)");
-            System.out.println("11. Show all users                  (Librarian only)");
-            System.out.println("12. Search for user                 (Librarian only)");
-            System.out.println("13. Show all books borrowed by user (Librarian only)");
-            System.out.println("14. Sort books");
+            System.out.println("8. Sort books");
+
+            if(currentUser instanceof Librarian) {
+                System.out.println("9. Show all borrowed books          (Librarian only)");
+                System.out.println("10. Add new book                    (Librarian only)");
+                System.out.println("11. Remove book                     (Librarian only)");
+                System.out.println("12. Show all users                  (Librarian only)");
+                System.out.println("13. Search for user                 (Librarian only)");
+                System.out.println("14. Show all books borrowed by user (Librarian only)");
+            }
+
             System.out.println("0. Logout");
 
             int choice = getIntegerFromUser("Enter option: ");
@@ -98,37 +101,37 @@ public class Library {
                     borrowBook();
                     break;
                 case 4:
-                    searchBook();
+                    returnBook();
                     break;
                 case 5:
                     showBorrowedBooks();
                     break;
                 case 6:
-                    returnBook();
+                    searchBook();
                     break;
                 case 7:
                     showAvailableBooks();
                     break;
                 case 8:
-                    showAllBorrowedBooks();
+                    sortBooks();
                     break;
                 case 9:
-                    addNewBook();
+                    showAllBorrowedBooks();
                     break;
                 case 10:
-                    removeBook();
+                    addNewBook();
                     break;
                 case 11:
-                    showAllUsers();
+                    removeBook();
                     break;
                 case 12:
-                    searchForUser();
+                    showAllUsers();
                     break;
                 case 13:
-                    showAllBooksBorrowedByUser();
+                    searchForUser();
                     break;
                 case 14:
-                    sortBooks();
+                    showAllBooksBorrowedByUser();
                     break;
                 case 0: // logout
                     saveProgramStateToFiles();
@@ -158,31 +161,16 @@ public class Library {
                 continue;
             }
 
-            Comparator<? super Book> comparator = null;
+            List<Book> books = getAllBooks();
 
             if(value == 1) { // sort by title
-                comparator = new Comparator<Book>() {
-                    @Override
-                    public int compare(Book b1, Book b2) {
-                        return b1.getTitle().compareToIgnoreCase(b2.getTitle());
-                    }
-                };
+                books.sort((b1, b2) -> b1.getTitle().compareToIgnoreCase(b2.getTitle()));
             }
             else if(value == 2) { // sort by author
-                comparator = new Comparator<Book>() {
-                    @Override
-                    public int compare(Book b1, Book b2) {
-                        return b1.getAuthor().compareToIgnoreCase(b2.getAuthor());
-                    }
-                };
+                books.sort((b1, b2) -> b1.getAuthor().compareToIgnoreCase(b2.getAuthor()));
             }
 
-            List<Book> books = getAllBooks();
-            books.sort(comparator);
-
-            for (Book book : books) {
-                System.out.println(book);
-            }
+            printBookList(books);
 
             break;
         }
@@ -311,9 +299,7 @@ public class Library {
     }
 
     private void showAvailableBooks() {
-        for (Book book : availableBooks) {
-            System.out.println(book);
-        }
+        printBookList(availableBooks);
     }
 
     private void returnBook() {
@@ -343,7 +329,7 @@ public class Library {
 
     private void showBorrowedBooks() {
         for (Book borrowedBook : currentUser.getBorrowedBooks()) {
-            System.out.println(borrowedBook);
+            System.out.printf("\"%s\" by %s\n", borrowedBook.getTitle(), borrowedBook.getAuthor());
         }
     }
 
@@ -438,8 +424,12 @@ public class Library {
     }
 
     private void showAllBooks() {
-        for (Book book : getAllBooks()) {
-            System.out.println(book);
+        printBookList(getAllBooks());
+    }
+
+    private void printBookList(List<Book> books) {
+        for (Book book : books) {
+            System.out.printf("\"%s\" by %s\n", book.getTitle(), book.getAuthor());
         }
     }
 
@@ -489,20 +479,22 @@ public class Library {
         FileUtility.saveObject(USER_DATA_FILE, users);
     }
 
-    private void createBookDataFile() {
+    private void createDefaultBookDataFile() {
         List<Book> defaultBooks = new ArrayList<>();
-        defaultBooks.add(new Book("Book1", "Author1", "Description1"));
-        defaultBooks.add(new Book("Book2", "Author2", "Description2"));
-        defaultBooks.add(new Book("Book3", "Author3", "Description3"));
-        defaultBooks.add(new Book("Book4", "Author4", "Description4"));
-        defaultBooks.add(new Book("Book5", "Author5", "Description5"));
+        defaultBooks.add(new Book("Harry Potter and the Philosopher’s Stone", "Rowling, J.K.", "Bla bla bla..."));
+        defaultBooks.add(new Book("A Confederacy of Dunces", "Toole, John Kennedy", "Bla bla bla..."));
+        defaultBooks.add(new Book("The Lord of the Rings", "Tolkien, J. R. R.", "Bla bla bla..."));
+        defaultBooks.add(new Book("Effective Java", "Bloch, Joshua", "Bla bla bla..."));
+        defaultBooks.add(new Book("Nineteen Eighty Four", "Orwell, George", "Bla bla bla..."));
 
         FileUtility.saveObject(BOOK_DATA_FILE, defaultBooks);
     }
 
-    private void createUserDataFile() {
+    private void createDefaultUserDataFile() {
         List<User> defaultUsers = new ArrayList<>();
         defaultUsers.add(new User("johan"));
+        defaultUsers.add(new User("peter"));
+        defaultUsers.add(new User("kalle"));
         defaultUsers.add(new Librarian("admin"));
 
         FileUtility.saveObject(USER_DATA_FILE, defaultUsers);
