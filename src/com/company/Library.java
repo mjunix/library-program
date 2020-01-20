@@ -71,9 +71,9 @@ public class Library {
             System.out.println("1. Show all books");
             System.out.println("2. Show book details");
             System.out.println("3. Borrow book");
-            System.out.println("4. Search book");
+            System.out.println("4. Return book");
             System.out.println("5. Show my borrowed books");
-            System.out.println("6. Return book");
+            System.out.println("6. Search book");
             System.out.println("7. Show available books");
             System.out.println("8. Sort books");
 
@@ -101,13 +101,13 @@ public class Library {
                     borrowBook();
                     break;
                 case 4:
-                    searchBook();
+                    returnBook();
                     break;
                 case 5:
                     showBorrowedBooks();
                     break;
                 case 6:
-                    returnBook();
+                    searchBook();
                     break;
                 case 7:
                     showAvailableBooks();
