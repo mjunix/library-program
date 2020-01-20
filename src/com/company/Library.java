@@ -415,7 +415,7 @@ public class Library {
             }
 
             Book book = allBooks.get(choice);
-            System.out.println("Title: " + book.getTitle());
+            System.out.println("\nTitle: " + book.getTitle());
             System.out.println("Author: " + book.getAuthor());
             System.out.println("Description: " + book.getDescription());
             System.out.println("Available: " + availableBooks.contains(book));
