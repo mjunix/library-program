@@ -491,11 +491,11 @@ public class Library {
 
     private void createBookDataFile() {
         List<Book> defaultBooks = new ArrayList<>();
-        defaultBooks.add(new Book("Book1", "Author1", "Description1"));
-        defaultBooks.add(new Book("Book2", "Author2", "Description2"));
-        defaultBooks.add(new Book("Book3", "Author3", "Description3"));
-        defaultBooks.add(new Book("Book4", "Author4", "Description4"));
-        defaultBooks.add(new Book("Book5", "Author5", "Description5"));
+        defaultBooks.add(new Book("Harry Potter and the Philosopher’s Stone", "Rowling, J.K.", "Bla bla bla..."));
+        defaultBooks.add(new Book("A Confederacy of Dunces", "Toole, John Kennedy", "Bla bla bla..."));
+        defaultBooks.add(new Book("The Lord of the Rings", "Tolkien, J. R. R.", "Bla bla bla..."));
+        defaultBooks.add(new Book("Effective Java", "Bloch, Joshua", "Bla bla bla..."));
+        defaultBooks.add(new Book("Nineteen Eighty Four", "Orwell, George", "Bla bla bla..."));
 
         FileUtility.saveObject(BOOK_DATA_FILE, defaultBooks);
     }
