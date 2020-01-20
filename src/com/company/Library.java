@@ -20,7 +20,7 @@ public class Library {
 
     private Scanner scanner = new Scanner(System.in);
 
-    private static final Duration LOAN_DURATION = Duration.ofDays(14);
+    private static final Duration LOAN_DURATION = Duration.ofSeconds(5);
 
     public Library() {
         if (!Files.exists(Path.of(BOOK_DATA_FILE))) {
