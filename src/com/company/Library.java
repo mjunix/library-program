@@ -170,9 +170,7 @@ public class Library {
                 books.sort((b1, b2) -> b1.getAuthor().compareToIgnoreCase(b2.getAuthor()));
             }
 
-            for (Book book : books) {
-                System.out.println(book);
-            }
+            printBookList(books);
 
             break;
         }
@@ -301,9 +299,7 @@ public class Library {
     }
 
     private void showAvailableBooks() {
-        for (Book book : availableBooks) {
-            System.out.println(book);
-        }
+        printBookList(availableBooks);
     }
 
     private void returnBook() {
@@ -333,7 +329,7 @@ public class Library {
 
     private void showBorrowedBooks() {
         for (Book borrowedBook : currentUser.getBorrowedBooks()) {
-            System.out.println(borrowedBook);
+            System.out.printf("\"%s\" by %s\n", borrowedBook.getTitle(), borrowedBook.getAuthor());
         }
     }
 
@@ -428,8 +424,12 @@ public class Library {
     }
 
     private void showAllBooks() {
-        for (Book book : getAllBooks()) {
-            System.out.println(book);
+        printBookList(getAllBooks());
+    }
+
+    private void printBookList(List<Book> books) {
+        for (Book book : books) {
+            System.out.printf("\"%s\" by %s\n", book.getTitle(), book.getAuthor());
         }
     }
 
