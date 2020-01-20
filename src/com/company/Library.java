@@ -2,6 +2,8 @@ package com.company;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -17,6 +19,8 @@ public class Library {
     private User currentUser;
 
     private Scanner scanner = new Scanner(System.in);
+
+    private static final Duration LOAN_DURATION = Duration.ofSeconds(5);
 
     public Library() {
         if (!Files.exists(Path.of(BOOK_DATA_FILE))) {
@@ -34,6 +38,7 @@ public class Library {
 
     public void startProgram() {
         System.out.println("Welcome to Library Program");
+        System.out.println("NOTE: Program state is only saved when logging out!");
         System.out.println("Please login...");
         login();
     }
@@ -48,6 +53,7 @@ public class Library {
                 break;
             } else if (loggedInSuccessFully(username)) {
                 // logged in successfully
+                showLoginMessages();
                 showMainMenu();
             } else {
                 System.out.println("ERROR! Wrong username. Try again!");
@@ -445,6 +451,16 @@ public class Library {
         }
 
         return allBooks;
+    }
+
+    private void showLoginMessages() {
+        for (Book borrowedBook : currentUser.getBorrowedBooks()) {
+            LocalDateTime returnDate = borrowedBook.getLoanDate().plus(LOAN_DURATION);
+
+            if(LocalDateTime.now().isAfter(returnDate)) {
+                System.out.println("INFO: \"" + borrowedBook.getTitle() + "\" is overdue!");
+            }
+        }
     }
 
     private int getIntegerFromUser(String prompt) {
