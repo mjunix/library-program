@@ -493,6 +493,8 @@ public class Library {
     private void createUserDataFile() {
         List<User> defaultUsers = new ArrayList<>();
         defaultUsers.add(new User("johan"));
+        defaultUsers.add(new User("peter"));
+        defaultUsers.add(new User("kalle"));
         defaultUsers.add(new Librarian("admin"));
 
         FileUtility.saveObject(USER_DATA_FILE, defaultUsers);
