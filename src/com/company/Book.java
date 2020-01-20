@@ -41,6 +41,7 @@ public class Book implements Serializable {
                 "title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", description='" + description + '\'' +
+                ", loanDate=" + loanDate +
                 '}';
     }
 }
