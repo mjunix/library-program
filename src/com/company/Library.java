@@ -38,6 +38,7 @@ public class Library {
 
     public void startProgram() {
         System.out.println("Welcome to Library Program");
+        System.out.println("NOTE: Program state is only saved when logging out!");
         System.out.println("Please login...");
         login();
     }
