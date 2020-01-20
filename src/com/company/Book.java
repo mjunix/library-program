@@ -1,11 +1,13 @@
 package com.company;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class Book implements Serializable {
     private String title;
     private String author;
     private String description;
+    private LocalDateTime loanDate;
 
     public Book(String title, String author, String description) {
         this.title = title;
@@ -23,6 +25,14 @@ public class Book implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public LocalDateTime getLoanDate() {
+        return loanDate;
+    }
+
+    public void setLoanDate(LocalDateTime loanDate) {
+        this.loanDate = loanDate;
     }
 
     @Override
