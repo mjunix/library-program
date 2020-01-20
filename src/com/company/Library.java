@@ -23,13 +23,13 @@ public class Library {
 
     public Library() {
         if (!Files.exists(Path.of(BOOK_DATA_FILE))) {
-            createBookDataFile();
+            createDefaultBookDataFile();
         }
 
         availableBooks = (List<Book>) FileUtility.loadObject(BOOK_DATA_FILE);
 
         if (!Files.exists(Path.of(USER_DATA_FILE))) {
-            createUserDataFile();
+            createDefaultUserDataFile();
         }
 
         users = (List<User>) FileUtility.loadObject(USER_DATA_FILE);
@@ -479,7 +479,7 @@ public class Library {
         FileUtility.saveObject(USER_DATA_FILE, users);
     }
 
-    private void createBookDataFile() {
+    private void createDefaultBookDataFile() {
         List<Book> defaultBooks = new ArrayList<>();
         defaultBooks.add(new Book("Harry Potter and the Philosopher’s Stone", "Rowling, J.K.", "Bla bla bla..."));
         defaultBooks.add(new Book("A Confederacy of Dunces", "Toole, John Kennedy", "Bla bla bla..."));
@@ -490,7 +490,7 @@ public class Library {
         FileUtility.saveObject(BOOK_DATA_FILE, defaultBooks);
     }
 
-    private void createUserDataFile() {
+    private void createDefaultUserDataFile() {
         List<User> defaultUsers = new ArrayList<>();
         defaultUsers.add(new User("johan"));
         defaultUsers.add(new User("peter"));
