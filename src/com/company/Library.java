@@ -333,9 +333,7 @@ public class Library {
             return;
         }
 
-        for (Book borrowedBook : currentUser.getBorrowedBooks()) {
-            System.out.printf("\"%s\" by %s\n", borrowedBook.getTitle(), borrowedBook.getAuthor());
-        }
+        printBookList(currentUser.getBorrowedBooks());
     }
 
     private void searchBook() {
