@@ -364,11 +364,19 @@ public class Library {
             System.out.print("Enter search string: ");
             String searchString = scanner.nextLine().toLowerCase();
 
+            System.out.println("\nResult:");
+            boolean matchFound = false;
+
             for (Book book : getAllBooks()) {
                 if ((choice == 1 && book.getTitle().toLowerCase().contains(searchString)) ||
                         (choice == 2 && book.getAuthor().toLowerCase().contains(searchString))) {
-                    System.out.println(book);
+                    System.out.printf("\"%s\" by %s\n", book.getTitle(), book.getAuthor());
+                    matchFound = true;
                 }
+            }
+
+            if(!matchFound) {
+                System.out.println("No results matched your criteria!");
             }
 
             break;
