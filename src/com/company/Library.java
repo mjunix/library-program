@@ -305,6 +305,11 @@ public class Library {
     }
 
     private void returnBook() {
+        if(currentUser.getBorrowedBooks().isEmpty()) {
+            System.out.println("You have not borrowed any books!");
+            return;
+        }
+
         while (true) {
             for (int i = 0; i < currentUser.getBorrowedBooks().size(); i++) {
                 System.out.println((i + 1) + ". " + currentUser.getBorrowedBooks().get(i).getTitle());
