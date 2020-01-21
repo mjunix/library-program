@@ -77,7 +77,7 @@ public class Library {
             System.out.println("7. Show available books");
             System.out.println("8. Sort books");
 
-            if(currentUser instanceof Librarian) {
+            if(currentUser.isLibrarian()) {
                 System.out.println("9. Show all borrowed books          (Librarian only)");
                 System.out.println("10. Add new book                    (Librarian only)");
                 System.out.println("11. Remove book                     (Librarian only)");
@@ -89,6 +89,8 @@ public class Library {
             System.out.println("0. Logout");
 
             int choice = getIntegerFromUser("Enter option: ");
+
+            System.out.println();
 
             switch (choice) {
                 case 1:
@@ -177,7 +179,7 @@ public class Library {
     }
 
     private void showAllBooksBorrowedByUser() {
-        if (!(currentUser instanceof Librarian)) {
+        if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
@@ -202,7 +204,7 @@ public class Library {
             }
 
             for (Book borrowedBook : users.get(index).getBorrowedBooks()) {
-                System.out.println(borrowedBook);
+                System.out.println(borrowedBook.getTitle());
             }
 
             break;
@@ -210,7 +212,7 @@ public class Library {
     }
 
     private void searchForUser() {
-        if (!(currentUser instanceof Librarian)) {
+        if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
@@ -220,24 +222,24 @@ public class Library {
 
         for (User user : users) {
             if(user.getName().contains(searchString)) {
-                System.out.println(user);
+                System.out.println(user.getName());
             }
         }
     }
 
     private void showAllUsers() {
-        if (!(currentUser instanceof Librarian)) {
+        if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
 
         for (User user : users) {
-            System.out.println(user);
+            System.out.println(user.getName() + (user.isLibrarian() ? " (librarian)" : ""));
         }
     }
 
     private void removeBook() {
-        if (!(currentUser instanceof Librarian)) {
+        if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
@@ -268,7 +270,7 @@ public class Library {
     }
 
     private void addNewBook() {
-        if (!(currentUser instanceof Librarian)) {
+        if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
@@ -286,14 +288,14 @@ public class Library {
     }
 
     private void showAllBorrowedBooks() {
-        if (!(currentUser instanceof Librarian)) {
+        if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
 
         for (User user : users) {
             for (Book borrowedBook : user.getBorrowedBooks()) {
-                System.out.println(borrowedBook);
+                System.out.printf("\"%s\" borrowed by %s\n", borrowedBook.getTitle(), user.getName());
             }
         }
     }
@@ -303,6 +305,11 @@ public class Library {
     }
 
     private void returnBook() {
+        if(currentUser.getBorrowedBooks().isEmpty()) {
+            System.out.println("You have not borrowed any books!");
+            return;
+        }
+
         while (true) {
             for (int i = 0; i < currentUser.getBorrowedBooks().size(); i++) {
                 System.out.println((i + 1) + ". " + currentUser.getBorrowedBooks().get(i).getTitle());
@@ -328,9 +335,12 @@ public class Library {
     }
 
     private void showBorrowedBooks() {
-        for (Book borrowedBook : currentUser.getBorrowedBooks()) {
-            System.out.printf("\"%s\" by %s\n", borrowedBook.getTitle(), borrowedBook.getAuthor());
+        if(currentUser.getBorrowedBooks().isEmpty()) {
+            System.out.println("You have not borrowed any books!");
+            return;
         }
+
+        printBookList(currentUser.getBorrowedBooks());
     }
 
     private void searchBook() {
@@ -354,11 +364,19 @@ public class Library {
             System.out.print("Enter search string: ");
             String searchString = scanner.nextLine().toLowerCase();
 
+            System.out.println("\nResult:");
+            boolean matchFound = false;
+
             for (Book book : getAllBooks()) {
                 if ((choice == 1 && book.getTitle().toLowerCase().contains(searchString)) ||
                         (choice == 2 && book.getAuthor().toLowerCase().contains(searchString))) {
-                    System.out.println(book);
+                    System.out.printf("\"%s\" by %s\n", book.getTitle(), book.getAuthor());
+                    matchFound = true;
                 }
+            }
+
+            if(!matchFound) {
+                System.out.println("No results matched your criteria!");
             }
 
             break;
@@ -368,7 +386,8 @@ public class Library {
     private void borrowBook() {
         while (true) {
             for (int i = 0; i < availableBooks.size(); i++) {
-                System.out.println((i + 1) + ". " + availableBooks.get(i));
+                Book book = availableBooks.get(i);
+                System.out.printf("%d. \"%s\" by %s\n", (i + 1), book.getTitle(), book.getAuthor());
             }
             System.out.println("0. Exit");
 
@@ -415,7 +434,7 @@ public class Library {
             }
 
             Book book = allBooks.get(choice);
-            System.out.println("Title: " + book.getTitle());
+            System.out.println("\nTitle: " + book.getTitle());
             System.out.println("Author: " + book.getAuthor());
             System.out.println("Description: " + book.getDescription());
             System.out.println("Available: " + availableBooks.contains(book));
@@ -451,6 +470,10 @@ public class Library {
                 System.out.println("INFO: \"" + borrowedBook.getTitle() + "\" is overdue!");
             }
         }
+    }
+
+    private boolean isOverdue(Book book) {
+        return book.getLoanDate() != null && LocalDateTime.now().isAfter(book.getLoanDate().plus(LOAN_DURATION));
     }
 
     private int getIntegerFromUser(String prompt) {
