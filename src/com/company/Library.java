@@ -204,7 +204,7 @@ public class Library {
             }
 
             for (Book borrowedBook : users.get(index).getBorrowedBooks()) {
-                System.out.println(borrowedBook);
+                System.out.println(borrowedBook.getTitle());
             }
 
             break;
@@ -222,7 +222,7 @@ public class Library {
 
         for (User user : users) {
             if(user.getName().contains(searchString)) {
-                System.out.println(user);
+                System.out.println(user.getName());
             }
         }
     }
@@ -234,7 +234,7 @@ public class Library {
         }
 
         for (User user : users) {
-            System.out.println(user);
+            System.out.println(user.getName() + (user.isLibrarian() ? " (librarian)" : ""));
         }
     }
 
@@ -295,7 +295,7 @@ public class Library {
 
         for (User user : users) {
             for (Book borrowedBook : user.getBorrowedBooks()) {
-                System.out.println(borrowedBook);
+                System.out.printf("\"%s\" borrowed by %s\n", borrowedBook.getTitle(), user.getName());
             }
         }
     }
