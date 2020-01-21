@@ -28,6 +28,10 @@ public class User implements Serializable {
         return returnedBook;
     }
 
+    public boolean isLibrarian() {
+        return this instanceof Librarian;
+    }
+
     public List<Book> getBorrowedBooks() {
         return new ArrayList<>(borrowedBooks);
     }
