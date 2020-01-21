@@ -90,6 +90,8 @@ public class Library {
 
             int choice = getIntegerFromUser("Enter option: ");
 
+            System.out.println();
+
             switch (choice) {
                 case 1:
                     showAllBooks();
@@ -371,7 +373,8 @@ public class Library {
     private void borrowBook() {
         while (true) {
             for (int i = 0; i < availableBooks.size(); i++) {
-                System.out.println((i + 1) + ". " + availableBooks.get(i));
+                Book book = availableBooks.get(i);
+                System.out.printf("%d. \"%s\" by %s\n", (i + 1), book.getTitle(), book.getAuthor());
             }
             System.out.println("0. Exit");
 
