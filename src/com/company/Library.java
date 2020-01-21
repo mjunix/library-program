@@ -77,7 +77,7 @@ public class Library {
             System.out.println("7. Show available books");
             System.out.println("8. Sort books");
 
-            if(currentUser instanceof Librarian) {
+            if(currentUser.isLibrarian()) {
                 System.out.println("9. Show all borrowed books          (Librarian only)");
                 System.out.println("10. Add new book                    (Librarian only)");
                 System.out.println("11. Remove book                     (Librarian only)");
@@ -179,7 +179,7 @@ public class Library {
     }
 
     private void showAllBooksBorrowedByUser() {
-        if (!(currentUser instanceof Librarian)) {
+        if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
@@ -212,7 +212,7 @@ public class Library {
     }
 
     private void searchForUser() {
-        if (!(currentUser instanceof Librarian)) {
+        if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
@@ -228,7 +228,7 @@ public class Library {
     }
 
     private void showAllUsers() {
-        if (!(currentUser instanceof Librarian)) {
+        if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
@@ -239,7 +239,7 @@ public class Library {
     }
 
     private void removeBook() {
-        if (!(currentUser instanceof Librarian)) {
+        if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
@@ -270,7 +270,7 @@ public class Library {
     }
 
     private void addNewBook() {
-        if (!(currentUser instanceof Librarian)) {
+        if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
@@ -288,7 +288,7 @@ public class Library {
     }
 
     private void showAllBorrowedBooks() {
-        if (!(currentUser instanceof Librarian)) {
+        if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
         }
