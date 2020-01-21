@@ -458,6 +458,10 @@ public class Library {
         }
     }
 
+    private boolean isOverdue(Book book) {
+        return book.getLoanDate() != null && LocalDateTime.now().isAfter(book.getLoanDate().plus(LOAN_DURATION));
+    }
+
     private int getIntegerFromUser(String prompt) {
         while (true) {
             try {
