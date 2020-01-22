@@ -83,7 +83,7 @@ public class Library {
                 System.out.println("11. Remove book                     (Librarian only)");
                 System.out.println("12. Show all users                  (Librarian only)");
                 System.out.println("13. Search for user                 (Librarian only)");
-                System.out.println("14. Show all books borrowed by user (Librarian only)");
+                System.out.println("14. Show books borrowed by a user   (Librarian only)");
             }
 
             System.out.println("0. Logout");
@@ -133,7 +133,7 @@ public class Library {
                     searchForUser();
                     break;
                 case 14:
-                    showAllBooksBorrowedByUser();
+                    showBooksBorrowedByAUser();
                     break;
                 case 0: // logout
                     saveProgramStateToFiles();
@@ -178,7 +178,7 @@ public class Library {
         }
     }
 
-    private void showAllBooksBorrowedByUser() {
+    private void showBooksBorrowedByAUser() {
         if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
