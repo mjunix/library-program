@@ -203,7 +203,14 @@ public class Library {
                 continue;
             }
 
-            for (Book borrowedBook : users.get(index).getBorrowedBooks()) {
+            User user = users.get(index);
+
+            if(user.getBorrowedBooks().isEmpty()) {
+                System.out.println("This user has not borrowed any books!");
+                return;
+            }
+
+            for (Book borrowedBook : user.getBorrowedBooks()) {
                 System.out.println(borrowedBook.getTitle());
             }
 
