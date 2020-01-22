@@ -227,10 +227,17 @@ public class Library {
         System.out.print("Enter search string: ");
         String searchString = scanner.nextLine().toLowerCase();
 
+        boolean matchFound = false;
+
         for (User user : users) {
-            if(user.getName().contains(searchString)) {
+            if(user.getName().toLowerCase().contains(searchString)) {
                 System.out.println(user.getName());
+                matchFound = true;
             }
+        }
+
+        if(!matchFound) {
+            System.out.println("No user with that name exist!");
         }
     }
 
