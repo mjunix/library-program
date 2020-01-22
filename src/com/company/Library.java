@@ -83,7 +83,7 @@ public class Library {
                 System.out.println("11. Remove book                     (Librarian only)");
                 System.out.println("12. Show all users                  (Librarian only)");
                 System.out.println("13. Search for user                 (Librarian only)");
-                System.out.println("14. Show all books borrowed by user (Librarian only)");
+                System.out.println("14. Show books borrowed by a user   (Librarian only)");
             }
 
             System.out.println("0. Logout");
@@ -133,7 +133,7 @@ public class Library {
                     searchForUser();
                     break;
                 case 14:
-                    showAllBooksBorrowedByUser();
+                    showBooksBorrowedByAUser();
                     break;
                 case 0: // logout
                     saveProgramStateToFiles();
@@ -178,7 +178,7 @@ public class Library {
         }
     }
 
-    private void showAllBooksBorrowedByUser() {
+    private void showBooksBorrowedByAUser() {
         if (!currentUser.isLibrarian()) {
             System.out.println("ERROR: This action can only be performed by librarians!");
             return;
@@ -203,7 +203,14 @@ public class Library {
                 continue;
             }
 
-            for (Book borrowedBook : users.get(index).getBorrowedBooks()) {
+            User user = users.get(index);
+
+            if(user.getBorrowedBooks().isEmpty()) {
+                System.out.println("This user has not borrowed any books!");
+                return;
+            }
+
+            for (Book borrowedBook : user.getBorrowedBooks()) {
                 System.out.println(borrowedBook.getTitle());
             }
 
@@ -220,10 +227,17 @@ public class Library {
         System.out.print("Enter search string: ");
         String searchString = scanner.nextLine().toLowerCase();
 
+        boolean matchFound = false;
+
         for (User user : users) {
-            if(user.getName().contains(searchString)) {
+            if(user.getName().toLowerCase().contains(searchString)) {
                 System.out.println(user.getName());
+                matchFound = true;
             }
+        }
+
+        if(!matchFound) {
+            System.out.println("No user with that name exist!");
         }
     }
 
@@ -340,7 +354,15 @@ public class Library {
             return;
         }
 
-        printBookList(currentUser.getBorrowedBooks());
+        for (Book borrowedBook : currentUser.getBorrowedBooks()) {
+            System.out.println("Title: " + borrowedBook.getTitle());
+            System.out.println("Author: " + borrowedBook.getAuthor());
+            System.out.println("Loan date: " + borrowedBook.getLoanDate());
+            LocalDateTime returnDate = borrowedBook.getLoanDate().plus(LOAN_DURATION);
+            System.out.println("Return date: " + returnDate +
+                    (isOverdue(borrowedBook) ? " (Is overdue!)" : " (To be returned in: " + Duration.between(borrowedBook.getLoanDate(), returnDate) + ")"));
+            System.out.println();
+        }
     }
 
     private void searchBook() {
