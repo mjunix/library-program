@@ -340,7 +340,15 @@ public class Library {
             return;
         }
 
-        printBookList(currentUser.getBorrowedBooks());
+        for (Book borrowedBook : currentUser.getBorrowedBooks()) {
+            System.out.println("Title: " + borrowedBook.getTitle());
+            System.out.println("Author: " + borrowedBook.getAuthor());
+            System.out.println("Loan date: " + borrowedBook.getLoanDate());
+            LocalDateTime returnDate = borrowedBook.getLoanDate().plus(LOAN_DURATION);
+            System.out.println("Return date: " + returnDate +
+                    (isOverdue(borrowedBook) ? " (Is overdue!)" : " (To be returned in: " + Duration.between(borrowedBook.getLoanDate(), returnDate) + ")"));
+            System.out.println();
+        }
     }
 
     private void searchBook() {
