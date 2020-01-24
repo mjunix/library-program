@@ -428,6 +428,9 @@ public class Library {
 
             Book bookToBorrow = availableBooks.remove(index);
             currentUser.borrowBook(bookToBorrow);
+
+            System.out.printf("You borrowed \"%s\" by %s\n", bookToBorrow.getTitle(), bookToBorrow.getAuthor());
+
             break;
         }
     }
