@@ -497,7 +497,7 @@ public class Library {
             LocalDateTime returnDate = borrowedBook.getLoanDate().plus(LOAN_DURATION);
 
             if(LocalDateTime.now().isAfter(returnDate)) {
-                System.out.println("INFO: \"" + borrowedBook.getTitle() + "\" is overdue!");
+                System.out.println("MESSAGE: \"" + borrowedBook.getTitle() + "\" is overdue!");
             }
         }
     }
