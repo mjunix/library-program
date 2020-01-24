@@ -406,6 +406,11 @@ public class Library {
     }
 
     private void borrowBook() {
+        if(availableBooks.isEmpty()) {
+            System.out.println("There are no books in the library!");
+            return;
+        }
+
         while (true) {
             for (int i = 0; i < availableBooks.size(); i++) {
                 Book book = availableBooks.get(i);
