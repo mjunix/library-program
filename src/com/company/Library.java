@@ -19,7 +19,7 @@ public class Library {
 
     private Scanner scanner = new Scanner(System.in);
 
-    private static final Duration LOAN_DURATION = Duration.ofSeconds(5); // intentionally very short to simplify testing
+    private static final Duration LOAN_DURATION = Duration.ofSeconds(30); // intentionally very short to simplify testing
 
     public Library() {
         if (!Files.exists(Path.of(BOOK_DATA_FILE))) {
@@ -166,9 +166,11 @@ public class Library {
             List<Book> books = getAllBooks();
 
             if(value == 1) { // sort by title
+                System.out.println("Books sorted by title:");
                 books.sort((b1, b2) -> b1.getTitle().compareToIgnoreCase(b2.getTitle()));
             }
             else if(value == 2) { // sort by author
+                System.out.println("Books sorted by author:");
                 books.sort((b1, b2) -> b1.getAuthor().compareToIgnoreCase(b2.getAuthor()));
             }
 
@@ -210,6 +212,7 @@ public class Library {
                 return;
             }
 
+            System.out.println("Books borrowed by " + user.getName() + ":");
             for (Book borrowedBook : user.getBorrowedBooks()) {
                 System.out.println(borrowedBook.getTitle());
             }
@@ -315,6 +318,7 @@ public class Library {
     }
 
     private void showAvailableBooks() {
+        System.out.println("Books in library:");
         printBookList(availableBooks);
     }
 
@@ -325,6 +329,7 @@ public class Library {
         }
 
         while (true) {
+            System.out.println("Your borrowed books:");
             for (int i = 0; i < currentUser.getBorrowedBooks().size(); i++) {
                 System.out.println((i + 1) + ". " + currentUser.getBorrowedBooks().get(i).getTitle());
             }
@@ -343,7 +348,9 @@ public class Library {
                 continue;
             }
 
-            availableBooks.add(currentUser.returnBook(index));
+            Book returnedBook = currentUser.returnBook(index);
+            availableBooks.add(returnedBook);
+            System.out.printf("You returned \"%s\" by %s\n", returnedBook.getTitle(), returnedBook.getAuthor());
             break;
         }
     }
@@ -406,7 +413,13 @@ public class Library {
     }
 
     private void borrowBook() {
+        if(availableBooks.isEmpty()) {
+            System.out.println("There are no books in the library!");
+            return;
+        }
+
         while (true) {
+            System.out.println("Books in library:");
             for (int i = 0; i < availableBooks.size(); i++) {
                 Book book = availableBooks.get(i);
                 System.out.printf("%d. \"%s\" by %s\n", (i + 1), book.getTitle(), book.getAuthor());
@@ -428,6 +441,9 @@ public class Library {
 
             Book bookToBorrow = availableBooks.remove(index);
             currentUser.borrowBook(bookToBorrow);
+
+            System.out.printf("You borrowed \"%s\" by %s\n", bookToBorrow.getTitle(), bookToBorrow.getAuthor());
+
             break;
         }
     }
@@ -486,10 +502,8 @@ public class Library {
 
     private void showLoginMessages() {
         for (Book borrowedBook : currentUser.getBorrowedBooks()) {
-            LocalDateTime returnDate = borrowedBook.getLoanDate().plus(LOAN_DURATION);
-
-            if(LocalDateTime.now().isAfter(returnDate)) {
-                System.out.println("INFO: \"" + borrowedBook.getTitle() + "\" is overdue!");
+            if(isOverdue(borrowedBook)) {
+                System.out.println("MESSAGE: \"" + borrowedBook.getTitle() + "\" is overdue!");
             }
         }
     }
