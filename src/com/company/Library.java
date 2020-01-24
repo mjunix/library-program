@@ -343,7 +343,9 @@ public class Library {
                 continue;
             }
 
-            availableBooks.add(currentUser.returnBook(index));
+            Book returnedBook = currentUser.returnBook(index);
+            availableBooks.add(returnedBook);
+            System.out.printf("You returned \"%s\" by %s\n", returnedBook.getTitle(), returnedBook.getAuthor());
             break;
         }
     }
