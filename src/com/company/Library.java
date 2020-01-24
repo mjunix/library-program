@@ -166,9 +166,11 @@ public class Library {
             List<Book> books = getAllBooks();
 
             if(value == 1) { // sort by title
+                System.out.println("Books sorted by title:");
                 books.sort((b1, b2) -> b1.getTitle().compareToIgnoreCase(b2.getTitle()));
             }
             else if(value == 2) { // sort by author
+                System.out.println("Books sorted by author:");
                 books.sort((b1, b2) -> b1.getAuthor().compareToIgnoreCase(b2.getAuthor()));
             }
 
