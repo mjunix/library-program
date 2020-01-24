@@ -19,7 +19,7 @@ public class Library {
 
     private Scanner scanner = new Scanner(System.in);
 
-    private static final Duration LOAN_DURATION = Duration.ofSeconds(5); // intentionally very short to simplify testing
+    private static final Duration LOAN_DURATION = Duration.ofSeconds(30); // intentionally very short to simplify testing
 
     public Library() {
         if (!Files.exists(Path.of(BOOK_DATA_FILE))) {
