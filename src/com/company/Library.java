@@ -210,6 +210,7 @@ public class Library {
                 return;
             }
 
+            System.out.println("Books borrowed by " + user.getName() + ":");
             for (Book borrowedBook : user.getBorrowedBooks()) {
                 System.out.println(borrowedBook.getTitle());
             }
@@ -315,6 +316,7 @@ public class Library {
     }
 
     private void showAvailableBooks() {
+        System.out.println("Books in library:");
         printBookList(availableBooks);
     }
 
@@ -325,6 +327,7 @@ public class Library {
         }
 
         while (true) {
+            System.out.println("Your borrowed books:");
             for (int i = 0; i < currentUser.getBorrowedBooks().size(); i++) {
                 System.out.println((i + 1) + ". " + currentUser.getBorrowedBooks().get(i).getTitle());
             }
@@ -414,6 +417,7 @@ public class Library {
         }
 
         while (true) {
+            System.out.println("Books in library:");
             for (int i = 0; i < availableBooks.size(); i++) {
                 Book book = availableBooks.get(i);
                 System.out.printf("%d. \"%s\" by %s\n", (i + 1), book.getTitle(), book.getAuthor());
